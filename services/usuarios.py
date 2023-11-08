@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException,status
 from db.db_mongo.services_db.usuarios import obtener_usuario_db
 from db.models.usuarios import Usuario_DB
-from middlewares.jwt_usuarios import crear_access_token, crear_token, desencriptar, validar_admin
+from middlewares.jwt_usuarios import crear_access_token, crear_token, desencriptar, validar_admin, validar_token
 from schemas.usuarios import Usuario
 
 def validar_usuario(username: str, password: str) ->dict:
@@ -21,6 +21,17 @@ def validar_usuario(username: str, password: str) ->dict:
     token = crear_token(acceso)
     
     return token
+
+def validar_autentificacion(usuario: Usuario_DB = Depends(validar_token)) -> bool:
+    ok: bool = True
+    if not usuario:
+       ok = False
+       raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Credenciales de autenticación inválidas",
+        headers={"WWW-Authenticate": "Bearer"})
+    
+    return ok
 
 def validar_autorizacion(ok: bool = Depends(validar_admin)) ->bool:
     if not ok:
