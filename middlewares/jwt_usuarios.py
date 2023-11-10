@@ -20,7 +20,7 @@ def validar_token(token: str = Depends(oauth2)) ->Usuario_DB:
         usuario = obtener_usuario_db("nombre_usuario", nombre_usuario)
     except JWTError as e:
         raise str(e)
-
+    
     return usuario
 
 def desencriptar(pass_form: str, contrasennia: str) ->bool:
