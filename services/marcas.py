@@ -69,7 +69,7 @@ def eliminar_marca_serv(id) ->Marcas:
     else:
         marca = marca_schema(marca_borrada)
 
-    return JSONResponse(status_code= status.HTTP_201_CREATED, content= jsonable_encoder(marca))
+    return JSONResponse(status_code= status.HTTP_200_OK, content= jsonable_encoder(marca))
 
 def marca_schema(marca_db: Marcas_DB) ->Marcas: 
     marca = dict(
