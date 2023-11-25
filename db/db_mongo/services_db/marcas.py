@@ -45,8 +45,8 @@ def editar_marca_db(marca: Marcas) ->Marcas_DB:
             if marca_existente["estado"] == 1:
                 return "La marca ya existe"
         else:
-                editado = db.web_gestion.marcas.find_one_and_update(filtro, nuevos_valores)
-                return marca_model(editado)
+            editado = db.web_gestion.marcas.find_one_and_update(filtro, nuevos_valores)
+            return marca_model(editado)
     except ConnectionError as e:
         return str(e)
 
@@ -56,10 +56,8 @@ def insertar_marca_db(marca: Marcas) ->Marcas_DB:
         marca_existente = db.web_gestion.marcas.find_one({"descrip_marca": marca.descrip_marca.upper()})
         if type(marca_existente) == dict:
             if marca_existente["estado"] == 1:
-                print("dict")
                 return "La marca ya existe"
             elif marca_existente["estado"] == 0:
-                print("dict2")
                 filtro = { '_id': ObjectId(marca_existente["_id"]) }
                 nuevos_valores = { 
                     "$set": { 
@@ -70,7 +68,6 @@ def insertar_marca_db(marca: Marcas) ->Marcas_DB:
                 editado = db.web_gestion.marcas.find_one_and_update(filtro, nuevos_valores)
                 return marca_model(editado)
         else:
-            print("dict3")
             marca_dict = dict(crear_marca_db(marca))
             del marca_dict["id"]
             id = db.web_gestion.marcas.insert_one(marca_dict).inserted_id
@@ -97,7 +94,7 @@ def eliminar_marca_db(campo: str, valor) ->Marcas_DB:
         else:
             return ""
     except ConnectionError as e:
-            return str(e)
+        return str(e)
 
 def marca_model(marca_db: dict) ->Marcas_DB:   
     marca = {
