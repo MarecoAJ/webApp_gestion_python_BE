@@ -13,7 +13,7 @@ def obtener_modelos_db() -> List[Modelos_DB]:
             { "estado": 1 })
         modelos_db = list(resultado_db)
         if len(modelos_db) >= 1:
-            return modelo_model(modelos_db)
+            return modelos_model(modelos_db)
     except ConnectionError as e:
         return str(e) 
 
