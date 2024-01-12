@@ -38,7 +38,7 @@ def editar_modelo_db(modelo: Modelos) ->Modelos_DB:
                'fecha_insercion': fecha_insercion,
            }
         }
-        modelo_existente = db.web_gestion.modelos.find_one_and_update(filtro, nuevos_valores)
+        modelo_existente = db.web_gestion.modelos.find_one({"descrip_marca": modelo.descrip_marca})
         if type(modelo_existente) == dict:
             if modelo_existente["estado"] == 1:
                 return "El modelo ya existe"

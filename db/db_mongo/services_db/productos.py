@@ -41,7 +41,7 @@ def editar_producto_db(producto: Productos) -> Productos_DB:
                 'fecha_insercion': fecha_insercion,
             }
         }
-        producto_existente = db.web_gestion.productos.find_one_and_update(filtro, nuevos_valores)
+        producto_existente = db.web_gestion.productos.find_one({"descrip_marca": producto.descrip_marca})
         if type(producto_existente) == dict:
             if producto_existente["estado"] == 1:
                 return "El producto ya existe"
